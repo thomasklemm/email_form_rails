@@ -1,5 +1,6 @@
 EmailForm::Application.routes.draw do
   resources :home, only: :index
+  match '/email' => 'home#send_email_form', as: :email_form, via: :post
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -145,8 +145,39 @@ noname:email_form thomasklemm$ rails g controller home index
       create      app/assets/stylesheets/home.css.scss
 
 
-# Gemfile
+# config/routes.rb
 # replace generated get 'home#index' with next line
 resources :home, only: :index
 root :to => 'home#index'
+
+# Gemfile
+gem 'simple_form'
+
+$ bundle install
+
+
+Run the generator:
+$ rails generate simple_form:install
+
+noname:email_form thomasklemm$ rails generate simple_form:install
+SimpleForm 2 supports Twitter bootstrap. In case you want to generate bootstrap configuration, please re-run this generator passing --bootstrap as option.
+       exist  config
+      create  config/initializers/simple_form.rb
+      create  config/locales/simple_form.en.yml
+      create  lib/templates/slim/scaffold/_form.html.slim
+
+
+noname:email_form thomasklemm$ rake routes
+home_index GET  /home(.:format)  home#index
+email_form POST /email(.:format) home#send_email_form
+      root      /                home#index
+
+
+noname:email_form thomasklemm$ rails g mailer contact_form
+      create  app/mailers/contact_form.rb
+      invoke  slim
+      create    app/views/contact_form
+      invoke  test_unit
+      create    test/functional/contact_form_test.rb
+
 
