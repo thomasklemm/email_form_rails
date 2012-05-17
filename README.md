@@ -51,6 +51,8 @@ class Message
 end
 ```
 
+## Validations
+
 ```
 # app/models/message.rb
 class Message
@@ -125,6 +127,9 @@ irb(main):036:0> m.valid?
 => false
 irb(main):037:0> m.errors
 => #<ActiveModel::Errors:0x007f951a7988d8 @base=#<Message body: nil, email: "myemail@writer.com", name: "Thomas Klemm", phone: nil>, @messages={:email=>[], :phone=>["can't be blank"]}>
+
+# Presence Validation works as expected
+```
 
 noname:email_form thomasklemm$ rails g controller home index
       create  app/controllers/home_controller.rb
