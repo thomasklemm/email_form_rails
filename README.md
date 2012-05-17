@@ -24,7 +24,7 @@ Before deciding to use any of them go check out their documentation. They are al
 
 ## The Process
 
-Let's create our new Rails app
+Let's create our new Rails app  
 ```
 $ rails new email_form
 ```
@@ -113,9 +113,9 @@ class Message
 
 end
 ```
-Learn more about Validation in the [Ruby on Rails Guides](http://guides.rubyonrails.org/active_record_validations_callbacks.html)
+Learn more about Validations in the [Ruby on Rails Guides](http://guides.rubyonrails.org/active_record_validations_callbacks.html)
 
-Test what we've done so far in the Rails Console
+Let's test what we've done so far in the Rails Console
 ```
 $ rails console
 or shorthand
@@ -165,11 +165,12 @@ irb(main):037:0> m.errors
 
 # => Presence Validation works as expected
 ```
-
+That is just the behaviour we want. Now that the model is set up we should display a form to our users.
 
 ## Building the Contact Form Controller and View
 
-Generate a controller (here: "home") and an action (here: "index") that you want to use to display the email form
+Let's generate a controller (here: "home") and an action (here: "index") that you want to use to display the email form. You will most certainly want to use a more suitable name for the controller in your app.
+
 ```
 $ rails g controller home index
 Output:
@@ -191,11 +192,11 @@ Output:
       create      app/assets/stylesheets/home.css.scss
 ```
 
-Set your routing
+Update the routes
 ```
 # config/routes.rb
+# replace generated get 'home#index' with this next line
 
-# replace generated get 'home#index' with next line
 resources :home, only: :index
 
 ###
@@ -203,11 +204,12 @@ resources :home, only: :index
 root :to => 'home#index'
 ```
 
-Test your routing by running the rails server and opening `http://localhost:3000/` in your browser. You should see a default index view page.
+Test your routing by running the `rails server` and opening `http://localhost:3000/` in your browser. You should see a default index view page.
 
 Now let's add a form for our message model using the simple form gem
+Now is the time to check out the [documentation of this nice gem](https://github.com/plataformatec/simple_form).
 
-First run the simple form generator
+Docs say we need to run a simple_form generator first, so let's do that
 ```
 $ rails generate simple_form:install
 Output:
@@ -218,10 +220,40 @@ Output:
       create  lib/templates/slim/scaffold/_form.html.slim
 ```
 
+We choose that our index view should contain the email form. In the controller action we need to create a new `Message` object we can pass to our corresponding view.
+```
+# app/controllers/home_controller.rb
+class HomeController < ApplicationController
+  def index
+    @message = Message.new
+  end
+end
+```
 
+Let's use our home#index view to render the form to the user
+```
+# app/views/home/index.html.slim
 
+h1 Welcome
 
+p You may leave me a mesage right here. Thanks for stopping by.
 
+- flash.each do |name, value|
+  p class="#{name}" #{value}
+
+= simple_form_for @message do |f|
+  = f.input :name
+  = f.input :email
+  = f.input :phone
+  = f.input :body, as: :text
+  = f.button :submit
+```
+
+The form should now get rendered on the page. If we submit it however, we run into trouble.
+The exception displayed tells us that simple_form automatically generates a url to submit the form to (the form action="..." attribute) that cannot be found.  
+We can fix this by supplying the form builder with a path set up to receive the form data.
+
+Let's say we want to sumbit the form to `"/email"` via a `post` request
 ```
 # config/routes.rb
 ###
@@ -231,10 +263,46 @@ match '/email' => 'home#send_email_form', as: :email_form, via: :post
 ###
 ```
 
-noname:email_form thomasklemm$ rake routes
+To have a look at the routes in our app we can run `$ rake routes` (you might need to restart your server for it to pick up this change)
+```
+$ rake routes
+
+Output:
+
 home_index GET  /home(.:format)  home#index
 email_form POST /email(.:format) home#send_email_form
       root      /                home#index
+```
+
+Great. Routing is set up.  
+
+We now can provide this new action path to our form builder
+```
+= simple_form_for @message, **url: email_form_path** do |f|
+  = f.input :name
+  = f.input :email
+  = f.input :phone
+  = f.input :body, as: :text
+  = f.button :submit
+```
+
+The way we have just set up our routes is matching a post request to "/email" to an action called "send_email_form" inside our home controller.  We intend it to be designed to handle our form data and send the email.  
+Let's add it to our `home` controller.
+```
+# app/controllers/home_controller.rb
+class HomeController < ApplicationController
+  def index
+    @message = Message.new
+  end
+
+  def send_email_form
+    raise params.inspect
+  end
+end
+```
+
+
+We want to route the post
 
 
 noname:email_form thomasklemm$ rails g mailer contact_form

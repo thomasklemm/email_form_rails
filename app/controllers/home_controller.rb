@@ -10,7 +10,7 @@ class HomeController < ApplicationController
   		ContactForm.email_form(@message).deliver
   		redirect_to root_path, notice: "Email successfully sent."
   	else
-  		flash.now.alert = "Email could not be sent. Please check your input."
+  		flash.now.alert = "Email could not be sent. Please check your entries."
   		render :index
   	end
 
