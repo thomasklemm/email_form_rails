@@ -4,7 +4,7 @@ A **step-by-step tutorial** on how to build a simple Rails app showing a **conta
 The user input will be **validated for presence / format / length / etc.** 
 If the input is valid the **data will be sent to a specified email address**, otherwise the form is rendered once again displaying error messages and allowing the user to update their form entries.
 
-This app is written in **Rails 3.2** using ActionMailer for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, as well as the Slim templating language (any templating language will do though).
+This app is written in **Rails 3.2** using ActionMa iler for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, as well as the Slim templating language (any templating language will do though).
 Emails sent in development mode will be displayed in browser using LetterOpener.
 
 The deployed sample is running on Heroku's most current cedar stack. [You may visit the running app here](). To demo email sending it uses Letter Opener in production as well to display the email that would be sent otherwise.
