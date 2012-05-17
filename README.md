@@ -1,4 +1,13 @@
-The email_form_rails app demoes a email form (such as a contact form) in Rails. All data entered into the form is send to a specified email address, no data is saved to a database. Written relying on Rails 3.2 with ActionMailer for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, and the Slim templating language. Emails sent in development mode will be displayed in browser using LetterOpener.The deployed sample is running on Heroku's most current cedar stack.
+# Email Form Rails
+
+A step-by-step tutorial on how to build a simple Rails app showing a contact form / email form / feedback form to the user.
+The user input will be validated for presence / format / length / etc. 
+If the input is valid the data will be sent to a specified email address, otherwise the form is rendered once again displaying error messages and allowing the user to update their form entries.
+
+This app is written in Rails 3.2 using ActionMailer for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, as well as the Slim templating language (any templating language will do though).
+Emails sent in development mode will be displayed in browser using LetterOpener.
+
+The deployed sample is running on Heroku's most current cedar stack. You can have a look here. To demo email sending it uses Letter Opener in production as well to display the email that would be sent otherwise.
 
 This demo is using these awesome gems: 
 
@@ -8,6 +17,8 @@ This demo is using these awesome gems:
 [Letter Opener](https://github.com/ryanb/letter_opener): Preview mail in the browser instead of sending.  
 [Slim Rails](https://github.com/leogalmeida/slim-rails): Provides rails 3 generators for slim.
 (ERB or HAML will do as well)
+
+ActiveRecord Validations will be used as well to validate user input.
 
 Before deciding to use any of them go check out their documentation. They are all written by very fine folks.
 
