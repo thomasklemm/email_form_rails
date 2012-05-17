@@ -277,9 +277,9 @@ email_form POST /email(.:format) home#send_email_form
 
 Great. Routing is set up.  
 
-We now can provide this new action path to our form builder
+We now can provide this action path to our form builder
 ```
-= simple_form_for @message, **url: email_form_path** do |f|
+= simple_form_for @message, url: email_form_path do |f|
   = f.input :name
   = f.input :email
   = f.input :phone
