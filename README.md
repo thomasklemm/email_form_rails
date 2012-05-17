@@ -287,7 +287,7 @@ We now can provide this new action path to our form builder
 ```
 
 The way we have just set up our routes is matching a post request to "/email" to an action called "send_email_form" inside our home controller.  We intend it to be designed to handle our form data and send the email.  
-Let's add it to our `home` controller.
+Let's add it to our `home` controller in a way it will display the params object to see if the message is sent correctly.
 ```
 # app/controllers/home_controller.rb
 class HomeController < ApplicationController
@@ -296,20 +296,51 @@ class HomeController < ApplicationController
   end
 
   def send_email_form
+    # Displays an error showing the params object
     raise params.inspect
   end
 end
 ```
 
+Let's submit our form again. We should get an exception now showing the `params[:message]` object containing the values we just submitted.
 
-We want to route the post
+Great! The form is submitting properly. Now let's add some logic that checks if the user entries are valid. If they are, the email should be sent (let's leave a todo here for now) and the user should be notified that things went smoothly. If validation failed the form should be rerendered displaying proper error messages that help him fill out the form as expected.
 
+```
+# app/controllers/home_controller.rb
+def send_email_form
+  @message = Message.new(params[:message])
+  
+  if @message.valid?
 
-noname:email_form thomasklemm$ rails g mailer contact_form
+    # TODO: Send email
+
+    redirect_to root_path, notice: "Email successfully sent."
+  else
+    flash.now.alert = "Email could not be sent. Please check your entries."
+    render :index
+  end
+
+end
+```
+
+Play time! Let's test the validation behaviour in the browser.
+
+If all seems to work properly, let's move on to send the email!
+
+# Sending the email containing the form entries
+
+TODO: step-by-step process
+
+```
+$ rails g mailer contact_form
+Output:
       create  app/mailers/contact_form.rb
       invoke  slim
       create    app/views/contact_form
       invoke  test_unit
       create    test/functional/contact_form_test.rb
+```
+
 
 
