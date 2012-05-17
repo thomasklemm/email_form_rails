@@ -5,9 +5,10 @@ Create a new Rails app
 $ rails new email_form
 ```
 
-Add Slim Templating Language
+Add ActiveAttr and Slim Templating Language
 ```
 # Gemfile.rb
+gem 'active_attr'
 gem 'slim-rails'
 ```
 
@@ -16,6 +17,17 @@ Run Bundle Install
 $ bundle install
 or just
 $ bundle
+```
+
+Generate model Message
+```
+$ rails generate model Message --skip-migration
+$ Output:
+      invoke  active_record
+      create    app/models/message.rb
+      invoke    test_unit
+      create      test/unit/message_test.rb
+      create      test/fixtures/messages.yml
 ```
 
 
