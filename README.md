@@ -1,4 +1,4 @@
-# Email Form Rails *A basic email form / contact form for Rails 3.2+*
+# Email Form Rails *A basic contact form for Rails 3.2+*
 
 A **step-by-step tutorial** on how to build a simple Rails app showing a **contact form / email form / feedback form** to the user.
 The user input will be **validated for presence / format / length / etc.** 
