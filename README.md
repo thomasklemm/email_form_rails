@@ -5,19 +5,30 @@ Create a new Rails app
 $ rails new email_form
 ```
 
-Add ActiveAttr and Slim Templating Language
+Add gems to your `Gemfile`  
+(it's nicer to actually add them along the way as we need them; if you do this run 'bundle install' and maybe restart you server each time you add a gem)
 ```
 # Gemfile.rb
+# ActiveAttr: What ActiveModel left out. https://github.com/cgriego/active_attr
 gem 'active_attr'
+# Slim Rails: Provides rails 3 generators for slim. https://github.com/leogalmeida/slim-rails
 gem 'slim-rails'
+# Validates Email Format Of: Validate e-mail addreses against RFC 2822 and RFC 3696 with this Ruby on Rails plugin and gem.. https://github.com/alexdunae/validates_email_format_of
+gem 'validates_email_format_of'
+# Simple Form: Forms made easy for Rails! It's tied to a simple DSL, with no opinion on markup. https://github.com/plataformatec/simple_form
+gem 'simple_form'
+# Letter Opener: Preview mail in the browser instead of sending. https://github.com/ryanb/letter_opener
+gem "letter_opener", :group => :development
 ```
 
-Run Bundle Install
+Run `bundle install` each time you add a new gem
 ```
 $ bundle install
 or just
 $ bundle
 ```
+
+## Building the Message Model
 
 Message Model: Generate
 ```
@@ -51,8 +62,7 @@ class Message
 end
 ```
 
-## Validations
-
+Message Model: Validations
 ```
 # app/models/message.rb
 class Message
@@ -74,11 +84,12 @@ class Message
   	# Phone must be present
   	validates_presence_of :phone
 
-  	# Body is optional but if given must be 500 characters at maximum
+  	# Body is optional but if given it must be 500 characters at maximum
   	validates_length_of :body, maximum: 500
 
 end
 ```
+Learn more about Validation in the [Ruby on Rails Guides](# Learn more at http://guides.rubyonrails.org/active_record_validations_callbacks.html)
 
 Test what we've done so far in the Rails Console
 ```
