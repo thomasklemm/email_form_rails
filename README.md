@@ -19,7 +19,7 @@ or just
 $ bundle
 ```
 
-Generate model Message
+Message Model: Generate
 ```
 $ rails generate model Message --skip-migration
 $ Output:
@@ -29,5 +29,28 @@ $ Output:
       create      test/unit/message_test.rb
       create      test/fixtures/messages.yml
 ```
+
+Message Model: Define attributes
+```
+# app/models/message.rb
+class Message
+	# Remove the inheritance from ActiveRecord::Base (class Message < ActiveRecord::Base)
+
+	# Include ActiveAttr functionality
+	include ActiveAttr::Model
+
+	# Define attributes
+	attribute :name
+	attribute :email
+	attribute :phone
+	attribute :body
+
+	# Mass assignment security
+	# Whitelist attributes that you want to mass assign user given data to
+  	attr_accessible :name, :email, :phone, :body
+end
+```
+
+
 
 
