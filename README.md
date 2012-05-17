@@ -126,4 +126,27 @@ irb(main):036:0> m.valid?
 irb(main):037:0> m.errors
 => #<ActiveModel::Errors:0x007f951a7988d8 @base=#<Message body: nil, email: "myemail@writer.com", name: "Thomas Klemm", phone: nil>, @messages={:email=>[], :phone=>["can't be blank"]}>
 
+noname:email_form thomasklemm$ rails g controller home index
+      create  app/controllers/home_controller.rb
+       route  get "home/index"
+      invoke  slim
+      create    app/views/home
+      create    app/views/home/index.html.slim
+      invoke  test_unit
+      create    test/functional/home_controller_test.rb
+      invoke  helper
+      create    app/helpers/home_helper.rb
+      invoke    test_unit
+      create      test/unit/helpers/home_helper_test.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/home.js.coffee
+      invoke    scss
+      create      app/assets/stylesheets/home.css.scss
+
+
+# Gemfile
+# replace generated get 'home#index' with next line
+resources :home, only: :index
+root :to => 'home#index'
 
