@@ -1,18 +1,15 @@
 The email_form_rails app demoes a email form (such as a contact form) in Rails. All data entered into the form is send to a specified email address, no data is saved to a database. Written relying on Rails 3.2 with ActionMailer for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, and the Slim templating language. Emails sent in development mode will be displayed in browser using LetterOpener.The deployed sample is running on Heroku's most current cedar stack.
 
-This demo is using these awesome gems:
-[ActiveAttr](https://github.com/cgriego/active_attr): What ActiveModel left out.
+This demo is using these awesome gems: 
 
-[Validates Email Format Of](https://github.com/alexdunae/validates_email_format_of): Validate e-mail addreses against RFC 2822 and RFC 3696 with this Ruby on Rails plugin and gem.
- 
-[Simple Form](https://github.com/plataformatec/simple_form): Forms made easy for Rails! It's tied to a simple DSL, with no opinion on markup.
-
-[Letter Opener](https://github.com/ryanb/letter_opener): Preview mail in the browser instead of sending.
- 
+[ActiveAttr](https://github.com/cgriego/active_attr): What ActiveModel left out.  
+[Validates Email Format Of](https://github.com/alexdunae/validates_email_format_of): Validate e-mail addreses against RFC 2822 and RFC 3696 with this Ruby on Rails plugin and gem.  
+[Simple Form](https://github.com/plataformatec/simple_form): Forms made easy for Rails! It's tied to a simple DSL, with no opinion on markup.  
+[Letter Opener](https://github.com/ryanb/letter_opener): Preview mail in the browser instead of sending.  
 [Slim Rails](https://github.com/leogalmeida/slim-rails): Provides rails 3 generators for slim.
 (ERB or HAML will do as well)
 
-Before deciding to use any of them you should check out their documentation. They are all written by very fine folks.
+Before deciding to use any of them go check out their documentation. They are all written by very fine folks.
 
 ## The process
 
