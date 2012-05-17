@@ -18,17 +18,16 @@ class Message
   	attr_accessible :name, :email, :phone, :body
 
   	# Validations
-
   	# Name must be present
   	validates_presence_of :name
 
   	# Email must be present and valid email format
   	validates_presence_of :email
-  	validates_format_of :email, with: %r\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/
+  	validates :email, email_format: { message: "is not looking like a valid email address"}
 
   	# Phone must be present
   	validates_presence_of :phone
 
   	# Body is optional but if given must be 500 characters at maximum
-  	validates_length_if :body, maximum: 500
+  	validates_length_of :body, maximum: 500
 end

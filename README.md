@@ -51,6 +51,79 @@ class Message
 end
 ```
 
+```
+# app/models/message.rb
+class Message
+		###
 
+			# Include ActiveModel::Validations
+		include ActiveModel::Validations
+
+		###
+
+	  # Validations
+  	# Name must be present
+  	validates_presence_of :name
+
+  	# Email must be present and valid email format
+  	validates_presence_of :email
+  	validates :email, email_format: { message: "is not looking like a valid email address"}
+
+  	# Phone must be present
+  	validates_presence_of :phone
+
+  	# Body is optional but if given must be 500 characters at maximum
+  	validates_length_of :body, maximum: 500
+
+end
+```
+
+Test what we've done so far in the Rails Console
+```
+$ rails console
+or shorthand
+$ rails c
+
+$ m = Message.new
+=> #<Message body: nil, email: nil, name: nil, phone: nil>
+$ m.errors.full_messages
+=> []
+# Run validation
+$ m.valid?
+=> false
+$ m.errors.full_messages
+=> ["Name can't be blank", "Email can't be blank", "Email is not looking like a valid email address", "Phone can't be blank"]
+
+$ m.email = "random"
+=> "random"
+$ m.valid?
+=> false
+$ m.errors.full_messages
+=> ["Name can't be blank", "Email is not looking like a valid email address", "Phone can't be blank"]
+
+$ m.email = "random@random"
+=> "random@random"
+$ m.valid?
+=> false
+$ m.errors
+=> #<ActiveModel::Errors:0x007f951a7988d8 @base=#<Message body: nil, email: "random@random", name: nil, phone: nil>, @messages={:name=>["can't be blank"], :email=>["is not looking like a valid email address"], :phone=>["can't be blank"]}>
+$ m.errors.full_messages
+=> ["Name can't be blank", "Email is not looking like a valid email address", "Phone can't be blank"]
+
+$ m.email = "myemail@writer.com"
+=> "myemail@writer.com"
+$ m.valid?
+=> false
+$ m.errors
+=> #<ActiveModel::Errors:0x007f951a7988d8 @base=#<Message body: nil, email: "myemail@writer.com", name: nil, phone: nil>, @messages={:name=>["can't be blank"], :email=>[], :phone=>["can't be blank"]}>
+
+# Valdation of email format seem to work properly
+
+irb(main):035:0* m.name = "Thomas Klemm"
+=> "Thomas Klemm"
+irb(main):036:0> m.valid?
+=> false
+irb(main):037:0> m.errors
+=> #<ActiveModel::Errors:0x007f951a7988d8 @base=#<Message body: nil, email: "myemail@writer.com", name: "Thomas Klemm", phone: nil>, @messages={:email=>[], :phone=>["can't be blank"]}>
 
 
