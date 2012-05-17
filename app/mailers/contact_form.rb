@@ -5,7 +5,7 @@ class ContactForm < ActionMailer::Base
 
   def email_form(message)
   	@message = message
-  	mail to: "#{message.name} <#{message.email}>", subject: "[Your Homepage] #{message.name} left a message"
+  	mail subject: "[Your Homepage] #{message.name} left a message"
   end
 
 end

@@ -41,3 +41,4 @@ gem 'slim-rails'
 gem 'active_attr'
 gem 'validates_email_format_of'
 gem 'simple_form'
+gem "letter_opener", :group => :development
