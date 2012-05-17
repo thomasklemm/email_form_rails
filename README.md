@@ -1,11 +1,27 @@
 The email_form_rails app demoes a email form (such as a contact form) in Rails. All data entered into the form is send to a specified email address, no data is saved to a database. Written relying on Rails 3.2 with ActionMailer for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, and the Slim templating language. Emails sent in development mode will be displayed in browser using LetterOpener.The deployed sample is running on Heroku's most current cedar stack.
 
-Create a new Rails app
+This demo is using these awesome gems:
+[ActiveAttr](https://github.com/cgriego/active_attr): What ActiveModel left out.
+
+[Validates Email Format Of](https://github.com/alexdunae/validates_email_format_of): Validate e-mail addreses against RFC 2822 and RFC 3696 with this Ruby on Rails plugin and gem.
+ 
+[Simple Form](https://github.com/plataformatec/simple_form): Forms made easy for Rails! It's tied to a simple DSL, with no opinion on markup.
+
+[Letter Opener](https://github.com/ryanb/letter_opener): Preview mail in the browser instead of sending.
+ 
+[Slim Rails](https://github.com/leogalmeida/slim-rails): Provides rails 3 generators for slim.
+(ERB or HAML will do as well)
+
+Before deciding to use any of them you should check out their documentation. They are all written by very fine folks.
+
+## The process
+
+Let's create our new Rails app
 ```
 $ rails new email_form
 ```
 
-Add gems to your `Gemfile`  
+Add the gems to our `Gemfile`  
 (it's nicer to actually add them along the way as we need them; if you do this run 'bundle install' and maybe restart you server each time you add a gem)
 ```
 # Gemfile.rb
@@ -89,7 +105,7 @@ class Message
 
 end
 ```
-Learn more about Validation in the [Ruby on Rails Guides](# Learn more at http://guides.rubyonrails.org/active_record_validations_callbacks.html)
+Learn more about Validation in the [Ruby on Rails Guides](http://guides.rubyonrails.org/active_record_validations_callbacks.html)
 
 Test what we've done so far in the Rails Console
 ```
@@ -130,7 +146,7 @@ $ m.valid?
 $ m.errors
 => #<ActiveModel::Errors:0x007f951a7988d8 @base=#<Message body: nil, email: "myemail@writer.com", name: nil, phone: nil>, @messages={:name=>["can't be blank"], :email=>[], :phone=>["can't be blank"]}>
 
-# Valdation of email format seem to work properly
+# => Validation of email format seem to work properly
 
 irb(main):035:0* m.name = "Thomas Klemm"
 => "Thomas Klemm"
@@ -139,10 +155,16 @@ irb(main):036:0> m.valid?
 irb(main):037:0> m.errors
 => #<ActiveModel::Errors:0x007f951a7988d8 @base=#<Message body: nil, email: "myemail@writer.com", name: "Thomas Klemm", phone: nil>, @messages={:email=>[], :phone=>["can't be blank"]}>
 
-# Presence Validation works as expected
+# => Presence Validation works as expected
 ```
 
-noname:email_form thomasklemm$ rails g controller home index
+
+## Building the Contact Form Controller and View
+
+Generate a controller (here: "home") and an action (here: "index") that you want to use to display the email form
+```
+$ rails g controller home index
+Output:
       create  app/controllers/home_controller.rb
        route  get "home/index"
       invoke  slim
@@ -159,29 +181,47 @@ noname:email_form thomasklemm$ rails g controller home index
       create      app/assets/javascripts/home.js.coffee
       invoke    scss
       create      app/assets/stylesheets/home.css.scss
+```
 
-
+Set your routing
+```
 # config/routes.rb
+
 # replace generated get 'home#index' with next line
 resources :home, only: :index
+
+###
+
 root :to => 'home#index'
+```
 
-# Gemfile
-gem 'simple_form'
+Test your routing by running the rails server and opening `http://localhost:3000/` in your browser. You should see a default index view page.
 
-$ bundle install
+Now let's add a form for our message model using the simple form gem
 
-
-Run the generator:
+First run the simple form generator
+```
 $ rails generate simple_form:install
-
-noname:email_form thomasklemm$ rails generate simple_form:install
-SimpleForm 2 supports Twitter bootstrap. In case you want to generate bootstrap configuration, please re-run this generator passing --bootstrap as option.
+Output:
+			SimpleForm 2 supports Twitter bootstrap. In case you want to generate bootstrap configuration, please re-run this generator passing --bootstrap as option.
        exist  config
       create  config/initializers/simple_form.rb
       create  config/locales/simple_form.en.yml
       create  lib/templates/slim/scaffold/_form.html.slim
+```
 
+
+
+
+
+```
+# config/routes.rb
+###
+
+match '/email' => 'home#send_email_form', as: :email_form, via: :post
+
+###
+```
 
 noname:email_form thomasklemm$ rake routes
 home_index GET  /home(.:format)  home#index
