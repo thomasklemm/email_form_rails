@@ -1,28 +1,28 @@
 # Email Form Rails
 
-A step-by-step tutorial on how to build a simple Rails app showing a contact form / email form / feedback form to the user.
-The user input will be validated for presence / format / length / etc. 
-If the input is valid the data will be sent to a specified email address, otherwise the form is rendered once again displaying error messages and allowing the user to update their form entries.
+A **step-by-step tutorial** on how to build a simple Rails app showing a **contact form / email form / feedback form** to the user.
+The user input will be **validated for presence / format / length / etc.** 
+If the input is valid the **data will be sent to a specified email address**, otherwise the form is rendered once again displaying error messages and allowing the user to update their form entries.
 
-This app is written in Rails 3.2 using ActionMailer for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, as well as the Slim templating language (any templating language will do though).
+This app is written in **Rails 3.2** using ActionMailer for Sending Mails, ActiveAttr for extending ActiveModels features, ActiveModel's Validations and SimpleForm as a Form Builder, as well as the Slim templating language (any templating language will do though).
 Emails sent in development mode will be displayed in browser using LetterOpener.
 
-The deployed sample is running on Heroku's most current cedar stack. You can have a look here. To demo email sending it uses Letter Opener in production as well to display the email that would be sent otherwise.
+The deployed sample is running on Heroku's most current cedar stack. [You may visit the running app here](). To demo email sending it uses Letter Opener in production as well to display the email that would be sent otherwise.
 
 This demo is using these awesome gems: 
 
-[ActiveAttr](https://github.com/cgriego/active_attr): What ActiveModel left out.  
-[Validates Email Format Of](https://github.com/alexdunae/validates_email_format_of): Validate e-mail addreses against RFC 2822 and RFC 3696 with this Ruby on Rails plugin and gem.  
-[Simple Form](https://github.com/plataformatec/simple_form): Forms made easy for Rails! It's tied to a simple DSL, with no opinion on markup.  
-[Letter Opener](https://github.com/ryanb/letter_opener): Preview mail in the browser instead of sending.  
-[Slim Rails](https://github.com/leogalmeida/slim-rails): Provides rails 3 generators for slim.
+**[ActiveAttr](https://github.com/cgriego/active_attr)**: What ActiveModel left out.  
+**[Validates Email Format Of](https://github.com/alexdunae/validates_email_format_of)**: Validate e-mail addreses against RFC 2822 and RFC 3696 with this Ruby on Rails plugin and gem.  
+**[Simple Form](https://github.com/plataformatec/simple_form)**: Forms made easy for Rails! It's tied to a simple DSL, with no opinion on markup.  
+**[Letter Opener](https://github.com/ryanb/letter_opener)**: Preview mail in the browser instead of sending.  
+**[Slim Rails](https://github.com/leogalmeida/slim-rails)**: Provides rails 3 generators for slim.
 (ERB or HAML will do as well)
 
 ActiveRecord Validations will be used as well to validate user input.
 
 Before deciding to use any of them go check out their documentation. They are all written by very fine folks.
 
-## The process
+## The Process
 
 Let's create our new Rails app
 ```
