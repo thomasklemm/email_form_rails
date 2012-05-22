@@ -25,13 +25,13 @@ Before deciding to use any of them go check out their documentation. They are al
 ## The Process
 
 Let's create our new Rails app  
-```
+```ruby
 $ rails new email_form
 ```
 
 Add the gems to our `Gemfile`  
 (it's nicer to actually add them along the way as we need them; if you do this run 'bundle install' and maybe restart you server each time you add a gem)
-```
+```ruby
 # Gemfile.rb
 # ActiveAttr: What ActiveModel left out. https://github.com/cgriego/active_attr
 gem 'active_attr'
@@ -46,7 +46,7 @@ gem "letter_opener", :group => :development
 ```
 
 Run `bundle install` each time you add a new gem
-```
+```ruby
 $ bundle install
 or just
 $ bundle
@@ -55,7 +55,7 @@ $ bundle
 ## Building the Message Model
 
 Message Model: Generate
-```
+```ruby
 $ rails generate model Message --skip-migration
 $ Output:
       invoke  active_record
@@ -66,7 +66,7 @@ $ Output:
 ```
 
 Message Model: Define attributes
-```
+```ruby
 # app/models/message.rb
 class Message
 	# Remove the inheritance from ActiveRecord::Base (class Message < ActiveRecord::Base)
@@ -87,7 +87,7 @@ end
 ```
 
 Message Model: Validations
-```
+```ruby
 # app/models/message.rb
 class Message
 		###
@@ -116,7 +116,7 @@ end
 Learn more about Validations in the [Ruby on Rails Guides](http://guides.rubyonrails.org/active_record_validations_callbacks.html)
 
 Let's test what we've done so far in the Rails Console
-```
+```ruby
 $ rails console
 or shorthand
 $ rails c
@@ -171,7 +171,7 @@ That is just the behaviour we want. Now that the model is set up we should displ
 
 Let's generate a controller (here: "home") and an action (here: "index") that you want to use to display the email form. You will most certainly want to use a more suitable name for the controller in your app.
 
-```
+```ruby
 $ rails g controller home index
 Output:
       create  app/controllers/home_controller.rb
@@ -193,14 +193,11 @@ Output:
 ```
 
 Update the routes
-```
+```ruby
 # config/routes.rb
 # replace generated get 'home#index' with this next line
-
 resources :home, only: :index
-
 ###
-
 root :to => 'home#index'
 ```
 
@@ -210,7 +207,7 @@ Now let's add a form for our message model using the simple form gem
 Now is the time to check out the [documentation of this nice gem](https://github.com/plataformatec/simple_form).
 
 Docs say we need to run a simple_form generator first, so let's do that
-```
+```ruby
 $ rails generate simple_form:install
 Output:
 			SimpleForm 2 supports Twitter bootstrap. In case you want to generate bootstrap configuration, please re-run this generator passing --bootstrap as option.
@@ -221,7 +218,7 @@ Output:
 ```
 
 We choose that our index view should contain the email form. In the controller action we need to create a new `Message` object we can pass to our corresponding view.
-```
+```ruby
 # app/controllers/home_controller.rb
 class HomeController < ApplicationController
   def index
@@ -231,7 +228,7 @@ end
 ```
 
 Let's use our home#index view to render the form to the user
-```
+```ruby
 # app/views/home/index.html.slim
 
 h1 Welcome
@@ -264,11 +261,9 @@ match '/email' => 'home#send_email_form', as: :email_form, via: :post
 ```
 
 To have a look at the routes in our app we can run `$ rake routes` (you might need to restart your server for it to pick up this change)
-```
+```ruby
 $ rake routes
-
 Output:
-
 home_index GET  /home(.:format)  home#index
 email_form POST /email(.:format) home#send_email_form
       root      /                home#index
@@ -277,7 +272,7 @@ email_form POST /email(.:format) home#send_email_form
 Great. Routing is set up.  
 
 We now can provide this action path to our form builder
-```
+```ruby
 = simple_form_for @message, url: email_form_path do |f|
   = f.input :name
   = f.input :email
@@ -288,7 +283,7 @@ We now can provide this action path to our form builder
 
 The way we have just set up our routes is matching a post request to "/email" to an action called "send_email_form" inside our home controller.  We intend it to be designed to handle our form data and send the email.  
 Let's add it to our `home` controller in a way it will display the params object to see if the message is sent correctly.
-```
+```ruby
 # app/controllers/home_controller.rb
 class HomeController < ApplicationController
   def index
@@ -306,7 +301,7 @@ Let's submit our form again. We should get an exception now showing the `params[
 
 Great! The form is submitting properly. Now let's add some logic that checks if the user entries are valid. If they are, the email should be sent (let's leave a todo here for now) and the user should be notified that things went smoothly. If validation failed the form should be rerendered displaying proper error messages that help him fill out the form as expected.
 
-```
+```ruby
 # app/controllers/home_controller.rb
 def send_email_form
   @message = Message.new(params[:message])
@@ -332,7 +327,7 @@ If all seems to work properly, let's move on to send the email!
 
 TODO: step-by-step process
 
-```
+```ruby
 $ rails g mailer contact_form
 Output:
       create  app/mailers/contact_form.rb
