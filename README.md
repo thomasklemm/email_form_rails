@@ -25,7 +25,7 @@ Before deciding to use any of them go check out their documentation. They are al
 ## The Process
 
 Let's create our new Rails app  
-```ruby
+```shell
 $ rails new email_form
 ```
 
