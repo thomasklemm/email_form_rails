@@ -1,7 +1,7 @@
 class ContactForm < ActionMailer::Base
   
-  default from: "github@tklemm.eu"
-  default to: "github@tklemm.eu"
+  default from: "mail@example.com"
+  default to: "mail@example.com"
 
   def email_form(message)
   	@message = message
